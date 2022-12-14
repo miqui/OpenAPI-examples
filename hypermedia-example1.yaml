@@ -1,0 +1,55 @@
+openapi: 3.0.0
+
+info:
+  title: Petstore API
+  version: 1.0.0
+
+paths:
+  /pets:
+    get:
+      summary: Get a list of pets
+      parameters:
+        - in: query
+          name: limit
+          schema:
+            type: integer
+            default: 20
+      responses:
+        200:
+          description: A list of pets
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Pet"
+
+  /pets/{id}:
+    get:
+      summary: Get a pet by ID
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+            minimum: 1
+      responses:
+        200:
+          description: A pet
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Pet"
+
+components:
+  schemas:
+    Pet:
+      type: object
+      properties:
+        id:
+          type: integer
+          minimum: 1
+        name:
+          type: string
+        type:
+          type: string
