@@ -1,0 +1,25 @@
+openapi: 3.0.0
+info:
+  title: Rate-Limited API Example
+  version: 1.0.0
+paths:
+  /items:
+    get:
+      summary: Get a list of items
+      x-amazon-apigateway-api-key-source: HEADER  # Enforce key usage
+      x-amazon-apigateway-usage-plan: 
+        usagePlanId: myRateLimitingPlan  
+        quota:
+          limit: 5000  # Per day 
+          offset: 2 
+          period: DAY
+        throttle:
+          rateLimit: 20  # Requests per second
+          burstLimit: 100 
+      responses:
+        '200':
+          description: OK
+          # ... your response schema
+        '429': 
+          description: Too Many Requests
+
